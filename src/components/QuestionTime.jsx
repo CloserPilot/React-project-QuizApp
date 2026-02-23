@@ -6,15 +6,24 @@ export default function QuestionTimer({ timeout, onTimeout }) {
 
   useEffect(() => {
     console.log('SETTING TIMEOUT')
-    setTimeout(onTimeout, timeout);
+    const timer = setTimeout(onTimeout, timeout);
+
+    //CleanUp: Funcion que se ejecuta cuando el componente se desmonta o cambia dependencias
+    return ()=>{
+      clearTimeout(timer);
+    }
   }, [onTimeout, timeout])
 
   useEffect(() => {
     console.log('SETTING INTERVAL')
-
-    setInterval(() => {
+    const timer = setInterval(() => {
       setRemainingTime((prevState) => prevState - 100);
-    }, 100)
+    }, 100);
+    
+    //CleanUp: Funcion que se ejecuta cuando el componente se desmonta o cambia dependencias
+    return ()=>{
+      clearInterval(timer);
+    }
   }, []);
 
   return (
